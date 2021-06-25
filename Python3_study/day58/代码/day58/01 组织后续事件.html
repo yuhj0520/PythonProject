@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+<form action="">
+    <span id="d1" style="color: red"></span>
+    <input type="submit" id="d2">
+</form>
+
+<script>
+    $('#d2').click(function (e) {
+        $('#d1').text('宝贝 你能看到我吗?')
+        // 阻止标签后续事件的执行 方式1
+        // return false
+        // 阻止标签后续事件的执行 方式2
+        // e.preventDefault()
+    })
+</script>
+
+</body>
+</html>
