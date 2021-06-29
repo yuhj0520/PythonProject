@@ -75,7 +75,7 @@ print(f'删除key=\'b\'后字典值为: {m}')
 # popResult = m.pop('a') 报错
 
 # popitem删除：删除最后一个键值对，返回元组(删除的key,删除的value)
-m = {'a': '1', 'b': 2,  (1, 2): {1, 2}, 'b': {1: 2}, }
+m = {'a': '1', 'b': 2, (1, 2): {1, 2}, 'b': {1: 2}, }
 popResult = m.popitem()
 print(popResult)
 print(f'popitem删除后字典值为: {m}')
@@ -85,13 +85,14 @@ m.clear()
 print(f'清空后字典值为: {m}')
 
 # update 更新某个具体key对应的value，同时如果key不存在，则添加这个键值对
-m = {'a': '1', 'b': 2,  (1, 2): {1, 2}, 'b': {1: 2}, }
+m = {'a': '1', 'b': 2, (1, 2): {1, 2}, 'b': {1: 2}, }
 m.update({'a': 2, 'c': '3'})
 print(f'更新后字典值为: {m}')
 
-# get取值，兼容性较好，如果key不存在，返回None，不会报错
+# get(k,default)取值，兼容性较好，如果key不存在，返回None，不会报错，同时
 print(f'字典中get存在的key值为: {m.get("a")}')
 print(f'字典中get不存在的key值为: {m.get("1")}')
+print(f'字典中get不存在的key值，可以设置默认值: {m.get("1","default")}')
 # v = m['1'] key不存在，报错
 
 # setdefault设置key值，若key存在不更新value，若key不存在，添加kv到字典中
@@ -109,5 +110,15 @@ m1 = {'a': '1', 'b': 2, (1, 2): {1, 2}, 'b': {1: 2}, }
 m2 = {'b': 2, 'a': '1', (1, 2): {1, 2}, 'b': {1: 2}, }
 print(f'字典m1: {m1}')
 print(f'字典m2: {m2}')
-print(f'字典中get不存在的key值为: {m1==m2}')
-https://blog.csdn.net/lvluobo/article/details/84943937
+print(f'字典m1与m2顺序不同，但值相同m1==m2为{m1==m2}')
+
+from collections import OrderedDict
+m1 = OrderedDict()
+m1[1] = 'a'
+m1[2] = 'b'
+m2 = OrderedDict()
+m2[1] = 'b'
+m2[2] = 'a'
+print(f'OrderedDict有序字典m1: {m1}')
+print(f'OrderedDict有序字典m2: {m2}')
+print(f'字典m1与m2顺序不同，且值不相同m1==m2为{m1==m2}')
