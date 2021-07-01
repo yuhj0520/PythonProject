@@ -151,15 +151,42 @@ print('--------------------函数闭包closures--------------------')
 #闭包函数，其中 exponent 称为自由变量
 def nth_power(exponent):
     x = 'x'
-    y='y'
+    y = 'y'
+
     def exponent_of(base):
-        x,y
+        x, y
         return base ** exponent
-    return exponent_of # 返回值是 exponent_of 函数
-square = nth_power(2) # 计算一个数的平方
-cube = nth_power(3) # 计算一个数的立方
-print(f'计算 2 的平方:{square(2)},{nth_power(2)(2)}') # 计算 2 的平方
-print(f'计算 2 的立方:{cube(2)},{nth_power(3)(2)}') # 计算 2 的立方
+    return exponent_of  # 返回值是 exponent_of 函数
+
+
+square = nth_power(2)  # 计算一个数的平方
+cube = nth_power(3)  # 计算一个数的立方
+print(f'计算 2 的平方:{square(2)},{nth_power(2)(2)}')  # 计算 2 的平方
+print(f'计算 2 的立方:{cube(2)},{nth_power(3)(2)}')  # 计算 2 的立方
 print(nth_power.__closure__)
 print(square.__closure__)
-print(square.__closure__[0].cell_contents,square.__closure__[1].cell_contents,square.__closure__[2].cell_contents)
+print(square.__closure__[0].cell_contents, square.__closure__[
+      1].cell_contents, square.__closure__[2].cell_contents)
+
+
+'''
+python中我们称上面的这个x,y为闭包函数exponent_of的一个自由变量(free variable)。
+①闭包中的引用的自由变量只和具体的闭包有关联，闭包的每个实例引用的自由变量互不干扰。
+②一个闭包实例对其自由变量的修改会被传递到下一次该闭包实例的调用。
+'''
+
+def outer_func():
+    loc_list = []
+    def inner_func(name):
+        loc_list.append(len(loc_list) + 1)
+        print('%s loc_list = %s' %(name, loc_list))
+    return inner_func
+
+test1 = outer_func()
+test2 = outer_func()
+test1('0')
+test1('0')
+test1('0')
+test2('1')
+test1('0')
+test2('1')
