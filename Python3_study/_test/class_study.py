@@ -60,16 +60,15 @@ print(f'RpgGame develop_time is "{my_rpggame.develop_time}"')
 
 print('\n--------------------类的私有变量--------------------')
 
-
-class TestPrivate:
-
-
 '''
 ①、在Python中，没有绝对在外部访问不了的变量，私有化只是一个约定
 ②、以单个下划线开头的变量或方法应被视为非公开的API，外部的调用者也不应该去访问以单下划线开头的变量或方法
 ③、Python通过一个非常简单的机制完成了一个伪私有化功能，这个机制名叫名称转写(name mangling)：
     以双下划线开头，并以最多一个下划线结尾的标识符，例如__X，会被转写为_classname__X，其中classname为类名。
 '''
+
+
+class TestPrivate:
     _privateVar = '_varname'
     __privateVar = '_classname__varname'
     __privateVar_ = '_classname__varname_'
