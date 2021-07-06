@@ -148,7 +148,9 @@ print('--------------------函数闭包closures--------------------')
 一般情况下，返回的函数会赋值给一个变量，这个变量可以在后面被继续执行调用。
 '''
 
-#闭包函数，其中 exponent 称为自由变量
+# 闭包函数，其中 exponent 称为自由变量
+
+
 def nth_power(exponent):
     x = 'x'
     y = 'y'
@@ -175,12 +177,15 @@ python中我们称上面的这个x,y为闭包函数exponent_of的一个自由变
 ②一个闭包实例对其自由变量的修改会被传递到下一次该闭包实例的调用。
 '''
 
+
 def outer_func():
     loc_list = []
+
     def inner_func(name):
         loc_list.append(len(loc_list) + 1)
-        print('%s loc_list = %s' %(name, loc_list))
+        print('%s loc_list = %s' % (name, loc_list))
     return inner_func
+
 
 test1 = outer_func()
 test2 = outer_func()
@@ -190,3 +195,38 @@ test1('0')
 test2('1')
 test1('0')
 test2('1')
+
+
+print('\n--------------------函数不定长参数--------------------')
+"""
+*args与**kwargs，都可作为函数的形参，并且*与**后面的字母并不要求是这个关键字，
+只有变量前面的*才是必须的，即*v、**vars也是可以的
+当*args作为形参时，负责把多余的位置变量实参收集成元组，赋值给args
+当**kwargs作为形参时，负责把多余的关键字变量实参收集成字典，赋值给kwargs
+当*args作为实参时，负责把args变量对应的元组(或者列表、集合等)，打散成位置实参
+当**kwargs作为实参时，负责把kwargs变量对应的字典，打散成关键字实参
+因此函数定义时，参数顺序应该是
+some_func(fargs, *args, **kwargs)
+"""
+
+
+def test_args_kwargs_argument(arg1, arg2, arg3):
+    print(f"arg1:{arg1}, arg2:{arg2}, arg3:{arg3}")
+
+
+def test_args_kwargs_parameter(arg1, *arg2, **arg3):
+    print(f"arg1:{arg1}, arg2:{arg2}, arg3:{arg3}")
+
+
+# *args及**kwargs作为实参
+args = ("two", 3, 5)
+kwargs = {"arg3": 3, "arg2": "two", "arg1": 5}
+kwargs2 = {"x": 3, "y": "two", "z": 5}
+# arg1:two, arg2:3, arg3:5
+test_args_kwargs_argument(*args)
+# arg1:5, arg2:two, arg3:3
+test_args_kwargs_argument(**kwargs)
+# arg1:1, arg2:(('two', 3, 5),), arg3:{'x': 1, 'y': '2'}
+test_args_kwargs_parameter(1, args, x=1, y='2')
+# arg1:two, arg2:(3, 5), arg3:{'x': 3, 'y': 'two', 'z': 5}
+test_args_kwargs_parameter(*args, **kwargs2)
