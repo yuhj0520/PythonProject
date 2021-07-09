@@ -18,7 +18,7 @@ print(a)
 # Output: [(13, -3), (4, 1), (1, 2), (9, 10)]
 
 
-# 3、配合lambda表达式使用的函数map
+# 3、内置函数:map。配合lambda表达式使用的函数map
 # map(function_to_apply, list_of_inputs,...)
 # function_to_apply映射函数，可为匿名函数
 # list_of_inputs一个或多个序列
@@ -45,7 +45,7 @@ for i in range(5):
     print(list(value))  # 将map对象转换成list
 
 
-# 4、配合lambda表达式使用的函数filter、reduce
+# 4、内置函数:filter。配合lambda表达式使用的函数filter
 # filter(function_to_apply, list_of_inputs)，过滤列表中的元素，并且返回一个由所有符合要求的元素所构成的列表。
 # 取参数2的迭代器，然后遍历迭代器中每个元素，按照参数1的函数映射进行处理，过滤所有等于False的数据，留下所有等于True的数据，赋值给filter对象
 number_list = range(-5, 5)
@@ -53,9 +53,17 @@ number_list = range(-5, 5)
 less_than_zero = filter(lambda x: x < 0, number_list)
 print(list(less_than_zero))  # 将filter对象转换成list
 
-# 5、配合lambda表达式使用的函数reduce
+# 5、内置函数:reduce。配合lambda表达式使用的函数reduce
 from functools import reduce
 # reduce(function, iterable[, initializer])
 # function:有两个参数函数（可为匿名函数）、iterable:可迭代对象、initializer:可选，初始参数
-product = reduce(lambda x, y: x * y, [1, 2, 3, 4, 5]) # 针对列表中每个数据，取前两个值求乘积，结果作为新的x，取下一个值作为y，继续求乘积，直到迭代器中无数据。
+# 针对列表中每个数据，取前两个值求乘积，结果作为新的x，取下一个值作为y，继续求乘积，直到迭代器中无数据。
+product = reduce(lambda x, y: x * y, [1, 2, 3, 4, 5])
 print(product)
+
+# 6、交换两个变量的值
+a = 1
+b = 2
+print(f'交换两个变量的值，交换前，a={a},b={b}')
+a, b = b, a
+print(f'交换两个变量的值，交换后，a={a},b={b}')
