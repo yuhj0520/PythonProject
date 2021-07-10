@@ -56,7 +56,20 @@ for n in fab(5):
     print(n)
 f = fab(5)
 print(next(f))
-print(next(f))
-print(next(f))
-print(next(f))
-print(next(f))
+
+
+def foo():
+    print("generator busi starting...")
+    while True:
+        res = yield 4
+        print("res:", res)
+
+
+g = foo()  # 带有yield关键字的函数为生成器函数，在调用函数时，并不会执行函数，而是生成一个迭代器对象
+print('实例化生成器对象后')
+print(next(g))  # 开始调用生成器函数内部逻辑，遇到yield 4，不执行res的赋值操作，返回4，藉由print打印出来
+print("*" * 20)
+# 二次调用生成器函数内部逻辑，执行res赋值操作，由于yield 4在上一次循环过程中执行过，因此本次res赋值为None。
+# 继续执行循环，再次遇到yield 4，不执行res的赋值操作，返回4，藉由print打印出来。
+print(next(g))
+
