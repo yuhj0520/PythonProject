@@ -64,6 +64,14 @@ print(product)
 # 6、交换两个变量的值
 a = 1
 b = 2
-print(f'交换两个变量的值，交换前，a={a},b={b}')
+print(f'交换两个变量的值，交换前，a={a}, b={b}')
 a, b = b, a
-print(f'交换两个变量的值，交换后，a={a},b={b}')
+print(f'交换两个变量的值，交换后，a={a}, b={b}')
+
+# 7、函数文档注释
+# 类与函数的文档注释要在类名下或者函数名下，多行用'''，单行用#
+# 用help可以查看注释的文档内容
+def test_help():
+    '''This is test'''
+    ...
+help(test_help)
