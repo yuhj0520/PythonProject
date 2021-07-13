@@ -74,5 +74,13 @@ print("*" * 20)
 print(next(g))
 print(g.send(2))  # 为防止上述情况，生成器函数send，可以将一个值传入到上次yield返回的位置，继续执行，并且send函数内部会调用next方法
 print(g.send(None))  # 等同于next(g)
-g.close() # 提前关闭生成器
-print(next(g)) # error
+g.close()  # 提前关闭生成器
+# print(next(g)) # error
+
+
+print('\n--------------------生成式--------------------')
+# 1、列表生成式
+number_list = range(-5, 5)
+# 类似filter list(filter(lambda x: x < 0, number_list))
+trans_list = [x for x in number_list if x < 0]
+print('filter->', trans_list)

@@ -7,6 +7,7 @@ flag = '1'
 flag_state = True if flag == '1' else False
 print(f'三元表达式值为: {flag_state}')
 
+
 # 2、lambda 参数:操作(参数)
 # add = lambda x, y : x + y
 # print(add(1, 2))
@@ -44,6 +45,10 @@ for i in range(5):
     value = map(lambda x: x(i), funcs)
     print(list(value))  # 将map对象转换成list
 
+    # 类似三元表达式的列表生成式
+    value2 = [x(i) for x in funcs]
+    print(value2)
+
 
 # 4、内置函数:filter。配合lambda表达式使用的函数filter
 # filter(function_to_apply, list_of_inputs)，过滤列表中的元素，并且返回一个由所有符合要求的元素所构成的列表。
@@ -51,7 +56,12 @@ for i in range(5):
 number_list = range(-5, 5)
 # 针对列表中每个数据，判断如果<0，那么留下该数据，最终组合成filter对象
 less_than_zero = filter(lambda x: x < 0, number_list)
-print(list(less_than_zero))  # 将filter对象转换成list
+print('filter->', list(less_than_zero))  # 将filter对象转换成list
+
+# 类似三元表达式的列表生成式
+less_than_zero_2 = [x for x in number_list if x < 0]
+print('filter->', less_than_zero_2)
+
 
 # 5、内置函数:reduce。配合lambda表达式使用的函数reduce
 from functools import reduce
@@ -61,6 +71,7 @@ from functools import reduce
 product = reduce(lambda x, y: x * y, [1, 2, 3, 4, 5])
 print(product)
 
+
 # 6、交换两个变量的值
 a = 1
 b = 2
@@ -68,10 +79,15 @@ print(f'交换两个变量的值，交换前，a={a}, b={b}')
 a, b = b, a
 print(f'交换两个变量的值，交换后，a={a}, b={b}')
 
+
 # 7、函数文档注释
 # 类与函数的文档注释要在类名下或者函数名下，多行用'''，单行用#
 # 用help可以查看注释的文档内容
+
+
 def test_help():
     '''This is test'''
     ...
+
+
 help(test_help)
