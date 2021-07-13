@@ -24,9 +24,30 @@ foo = iss.Foo()
 foo.func()
 
 # 模块的编写者可以在自己的文件中定义__all__变量用来控制*代表的意思，不在__all__变量里的变量函数类，是无法被引用的
-from import_study_source import * #此时的*只代表x和get
+from import_study_source import *  # 此时的*只代表x和get
 
-print(x) #可用
-get() #可用
-change() #不可用
+print(x)  # 可用
+get()  # 可用
+# change() #不可用
 # Foo() #不可用
+
+import sys
+# 模块搜索路径，从左到右来查找模块对应的文件
+sys.path.append(r'D:/')
+print(sys.path)
+print(sys.__name__)
+
+'''
+一个Python文件有两种用途，一种被当主程序/脚本执行，另一种被当模块导入，
+为了区别同一个文件的不同用途，每个py文件都内置了__name__变量，
+该变量在py文件被当做脚本执行时赋值为“__main__”,在py文件被当做模块导入时赋值为模块名
+'''
+
+
+import os
+file_name = os.path.basename(__file__)
+
+if __name__ == '__main__':
+    print(f'{file_name}被当做脚本执行, main')
+else:
+    print(f'{file_name}被当做模块执行, module')
