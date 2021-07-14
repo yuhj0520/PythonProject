@@ -27,7 +27,7 @@ print(f'新建字典方式三：对象方法，结果为：{m}')
 m = {}.fromkeys((1, 2, 3))
 print(f'新建字典方式四：dict.fromkeys(list/set/tuple,None)，结果为：{m}')
 m = {}.fromkeys({1, 2, 3}, 'defaultValue')
-print(f'新建字典方式四：dict.fromkeys(list/set/tuple,None)，结果为：{m}')
+print(f'新建字典方式四：dict.fromkeys(list/set/tuple,value)，结果为：{m}')
 
 
 print('\n')
@@ -117,8 +117,8 @@ m1 = OrderedDict()
 m1[1] = 'a'
 m1[2] = 'b'
 m2 = OrderedDict()
-m2[1] = 'b'
-m2[2] = 'a'
+m2[2] = 'b'
+m2[1] = 'a'
 print(f'OrderedDict有序字典m1: {m1}')
 print(f'OrderedDict有序字典m2: {m2}')
 print(f'字典m1与m2顺序不同，且值不相同m1==m2为{m1==m2}')

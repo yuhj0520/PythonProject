@@ -29,7 +29,7 @@ str对象不是一个迭代器，它是一个可迭代对象，而不是一个�
 '''
 my_string = "Yasoob"
 my_iter = iter(my_string)
-next(my_iter)
+print(next(my_iter))
 
 
 print('\n--------------------生成器--------------------')
@@ -83,4 +83,20 @@ print('\n--------------------生成式--------------------')
 number_list = range(-5, 5)
 # 类似filter list(filter(lambda x: x < 0, number_list))
 trans_list = [x for x in number_list if x < 0]
-print('filter->', trans_list)
+print('list->', trans_list)
+
+# 2、字典生成式
+my_dict = {'1': '2', 'a': 'b', 'c': 'd'}
+trans_dict = {k: v for k, v in my_dict.items() if k != '1'}
+print('dict->', trans_dict)
+
+# 3、集合生成式
+my_set = {1, 2, 3, 4, 5}
+trans_set = {x + 10 for x in my_set if x > 3}
+print('set->', trans_set)
+
+# 4、元祖生成器（非生成式）
+my_tuple = tuple(range(-5, 5))
+trans_tuple_generator = (x for x in range(-5, 5) if x > 0)
+print('tuple->', trans_tuple_generator)
+print('tuple->', trans_tuple_generator.__next__())
