@@ -51,3 +51,8 @@ if __name__ == '__main__':
     print(f'{file_name}被当做脚本执行, main')
 else:
     print(f'{file_name}被当做模块执行, module')
+
+
+# 包的绝对导入，是以顶层为基准的
+import package_study as ps
+print(ps.p_var1)
