@@ -103,6 +103,7 @@ def logit(logfile='out.log'):
                 opened_file.write(log_string + '\n')
             return func(*args, **kwargs)
         return wrapped_function
+        
     return logging_decorator
 
 
@@ -129,10 +130,8 @@ class Logit_class(object):
         self.logfile = logfile
 
     def __call__(self, func):
-    '''
-    判断对象是否为可调用对象可以用函数 callable
-    一个类实例要变成一个可调用对象，只需要实现一个特殊方法__call__()
-    '''
+    # 判断对象是否为可调用对象可以用函数 callable
+    # 一个类实例要变成一个可调用对象，只需要实现一个特殊方法__call__()
         @wraps(func)
         def wrapped_function(*args, **kwargs):
             log_string = func.__name__ + " was called"
