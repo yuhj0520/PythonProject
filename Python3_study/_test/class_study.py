@@ -42,7 +42,7 @@ class RpgGame(Game):
         super().__init__(name, classification, price)
         self.game_time = '100h'
 
-    # 覆盖/重写
+    # 覆盖/重写，类没有重载，同名函数后面的会覆盖前面的
     def game_info(self):
         print(f'Game info: name is "{self.name}" ,'
               f'classification is "{self.classification}",'
@@ -82,3 +82,7 @@ print(f'私有变量测试:__开头的变量，变量名转换:{test._TestPrivat
 print(f'私有变量测试:__开头_结尾的变量，变量名转换:{test._TestPrivate__privateVar_}')
 # print(f'私有变量测试:__开头__结尾的变量:{test._TestPrivate__privateVar__}') # 报错
 print(f'私有变量测试:__开头__结尾的变量，变量名不转换:{test.__privateVar__}')
+
+
+print('\n--------------------类的其他用法--------------------')
+print(f'类名.__dict__用来查看这个类容器内盛放的东西{Game.__dict__}')
