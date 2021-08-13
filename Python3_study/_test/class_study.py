@@ -29,6 +29,7 @@ class Game:
               f'"classification", price is "price"')
 
 
+print(f'类名.__dict__用来查看这个类容器内盛放的东西{Game.__dict__}')
 my_sweep = Game('sweep', 'D', '1$')
 my_sweep.game_info()
 my_sweep.develop_time = '20d'
@@ -65,6 +66,8 @@ print('\n--------------------类的私有变量--------------------')
 ②、以单个下划线开头的变量或方法应被视为非公开的API，外部的调用者也不应该去访问以单下划线开头的变量或方法
 ③、Python通过一个非常简单的机制完成了一个伪私有化功能，这个机制名叫名称转写(name mangling)：
     以双下划线开头，并以最多一个下划线结尾的标识符，例如__X，会被转写为_classname__X，其中classname为类名。
+④、类的方法也与类的变量一样，__开头也会发生变形
+⑤、变形操作只在类定义阶段发生一次，在类定义之后的赋值操作，不会变形
 '''
 
 
@@ -82,7 +85,35 @@ print(f'私有变量测试:__开头的变量，变量名转换:{test._TestPrivat
 print(f'私有变量测试:__开头_结尾的变量，变量名转换:{test._TestPrivate__privateVar_}')
 # print(f'私有变量测试:__开头__结尾的变量:{test._TestPrivate__privateVar__}') # 报错
 print(f'私有变量测试:__开头__结尾的变量，变量名不转换:{test.__privateVar__}')
+TestPrivate.__test = '__test'
+print(f'私有变量测试:类定义之后的赋值操作，变量名不转换:{TestPrivate.__test}')
 
 
-print('\n--------------------类的其他用法--------------------')
-print(f'类名.__dict__用来查看这个类容器内盛放的东西{Game.__dict__}')
+print('\n--------------------类的属性--------------------')
+# Python专门提供了一个装饰器property，可以将类中的函数“伪装成”对象的数据属性，
+# 对象在访问该特殊属性时会触发功能的执行，然后将返回值作为本次访问的结果
+class Foo:
+    def __init__(self, val):
+        self.__NAME = val  # 将属性隐藏起来
+
+    @property
+    def name(self):
+        return self.__NAME
+
+    @name.setter #将name打上property标识后，才可以使用的方法，否则会报错
+    def name(self, value):
+        if not isinstance(value, str):  # 在设定值之前进行类型检查
+            raise TypeError('%s must be str' % value)
+        self.__NAME = value  # 通过类型检查后,将值value存放到真实的位置self.__NAME
+
+    @name.deleter
+    def name(self):
+        raise PermissionError('Can not delete') # 主动抛出一个异常，相当于java的throw Exception
+
+
+f = Foo('name')
+print(f.name)
+f.name = 'LiLi'  # 触发name.setter装饰器对应的函数name(f,’Egon')
+print(f.name)
+# f.name = 123  # 触发name.setter对应的的函数name(f,123),抛出异常TypeError
+# del f.name  # 触发name.deleter对应的函数name(f),抛出异常PermissionError
