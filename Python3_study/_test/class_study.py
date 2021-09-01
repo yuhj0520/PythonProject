@@ -187,7 +187,6 @@ print('super()按照mro链向后查找属性或方法')
 obj.test()  # 属性查找的发起者是类C的对象obj，所以中途发生的属性查找都是参照C.mro()
 
 
-
 print('\n--------------------类的多态--------------------')
 # 借助abc模块实现抽象类的概念
 from abc import ABCMeta, abstractmethod
@@ -198,7 +197,7 @@ class Task(metaclass=ABCMeta):
 
     @abstractmethod
     def run(self):
-        print('抽象方法中实现会报错')  # 抽象方法中有具体实现不会报错，但无意义
+        print('抽象方法中实现不会报错')  # 抽象方法中有具体实现不会报错，但无意义
         pass
 
 # t = Task() # 抽象类实例化会报错
@@ -224,13 +223,15 @@ print('\n--------------------类的绑定方法与非绑定方法---------------
 2、在类中某个方法加上装饰器@staticmethod后，该函数就变成了非绑定方法，也称为python静态方法。
 '''
 
+
 class TestBind:
-    str = 'test';
+    str = 'test'
 
     def __init__(self):
         pass
+
     def get_str(self):
-        return self.str;
+        return self.str
 
     @classmethod
     def test_class_method(cls):
@@ -239,6 +240,7 @@ class TestBind:
     @staticmethod
     def test_static_method():
         print('static method')
+
 
 tb1 = TestBind()
 tb1.str = 'test_new'
@@ -250,7 +252,122 @@ print(f'通过对象名.classmethod方法获取的str值为:{tb1.test_class_meth
 
 TestBind.test_static_method()
 tb1.test_static_method()
+
+
 class Foo:
     def __init__():
+        print('Foo.__init__')
         pass
-Foo.test_static_method();
+# Foo.test_static_method() 无法调用其他类的静态方法
+
+
+print('\n--------------------类的反射--------------------')
+
+
+class TestReflet:
+    name = ''
+    value = ''
+
+    def __init__(self, name, value):
+        self.name = name
+        self.value = value
+
+    # __str__方法会在对象被打印时自动触发，必须返回字符串类型
+    def __str__(self):
+        return (f'对象属性名为{self.name}值为{self.value}')
+
+    #__del__会在对象被删除时自动触发，由于Python自带的垃圾回收机制会自动清理Python程序的资源，
+    # 所以当一个对象只占用应用程序级资源时，完全没必要为对象定制__del__方法。
+    # 但在产生一个对象的同时涉及到申请系统资源（比如系统打开的文件、网络连接等）的情况下，关于系统资源的回收，
+    # Python的垃圾回收机制便派不上用场了，需要我们为对象定制该方法，用来在对象被删除时自动触发回收系统资源的操作。
+    def __del__(self):
+        # conn.close()
+        pass
+
+
+tr = TestReflet('k', 'v')
+print(dir(tr))  # 类的所有方法与属性
+# 判断类是否有某个属性或方法
+print(hasattr(tr, 'name'))  # 类的属性名为字符型
+print(hasattr(tr, 'k'))  # 类的属性名，而不是类的属性对应的值
+print(hasattr(tr, '__init__'))  # 类的方法名
+# 获取类的属性值或方法值
+print(getattr(tr, 'k', 'default'))  # 若属性或方法不存在，则返回默认值
+print(getattr(tr, '__init__', TestReflet.__init__))
+# 设置类的属性值或方法值
+print(setattr(tr, 'k', 'k'))  # 获取类的属性值，若属性或方法不存在，则返回默认值
+print(getattr(tr, 'k', 'default'))
+# 删除类的属性值或方法值
+delattr(tr, 'k')  # 等同于del t.age
+print(getattr(tr, 'k', 'default'))
+print(tr)
+
+
+print('\n--------------------类的exec--------------------')
+g = {
+    'x': 1,
+    'y': 2
+}
+l = {}
+
+exec('''
+global x,z
+x=100
+z=200
+m=300
+n=200
+''', g, l)
+
+print(g)  # {'x': 100, 'y': 2,'z':200,......}
+print(l)  # {'m': 300}
+
+
+print('\n--------------------元类--------------------')
+'''
+①、由于python一切皆对象，类也是一个对象，在执行类的定义时，会生成一个类的对象，用于生成类对象的类，即为元类
+②、若无特殊情况，元类为type。包括object类本身也是元类type的一个实例，可以用type(object)查看
+③、自定义一个元类要继承type，而指定一个类使用哪个元类，要使用metaclass='元类名'
+④、一个类定义了__call__接口，那这个类的实例对象，就可以被执行；
+  那么在实例化一个具体对象时，如a=A()，由于A是一个类也是一个对象，那就说明A的元类也必须有__call__接口，否则无法实例化出A这个类对象
+'''
+
+
+# 如下元类作用是在实例化使用此元类的类的对象时，将所有属性变为隐式的私有属性
+class Mymeta(type):  # 只有继承了type类才能称之为一个元类，否则就是一个普通的自定义类
+    def __call__(self, *args, **kwargs):  # self=<class '__main__.StanfordTeacher'>
+        print('__call__')
+        # 1、调用__new__产生一个空对象obj
+        # 此处的self是类StanfordTeacher，必须传参，代表创建一个StanfordTeacher的对象obj
+        obj = self.__new__(self)
+
+        # 2、调用__init__初始化空对象obj
+        self.__init__(obj, *args, **kwargs)
+
+        # 在初始化之后，obj.__dict__里就有值了
+        obj.__dict__ = {'_%s__%s' %
+                        (self.__name__, k): v for k, v in obj.__dict__.items()}
+        # 3、返回初始化好的对象obj
+        return obj
+
+
+class StanfordTeacher(object, metaclass=Mymeta):
+    school = 'Stanford'
+
+    def __init__(self, name, age):
+        print('__init__')
+        self.name = name
+        self.age = age
+
+    def say(self):
+        print('%s says welcome to the Stanford to learn Python' % self.name)
+
+
+t1 = StanfordTeacher('lili', 18)
+# {'_StanfordTeacher__name': 'lili', '_StanfordTeacher__age': 18}
+print(t1.__dict__)
+
+# 增加元类后，一个类的方法或属性的调用查找链为：当前类->mro链（查找到object）->自定义元类->type
+# obj = self.__new__(self)，会按照正常的继承调用链来查找，一直到object类，有__new__对象创建方法
+
+
+print(getattr(object, '__call__'))
