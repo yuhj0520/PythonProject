@@ -78,8 +78,9 @@ g.close()  # 提前关闭生成器
 # print(next(g)) # error
 
 
-print('\n--------------------生成式--------------------')
+print('\n--------------------生成式(推导式)--------------------')
 # 1、列表生成式
+# variable = [out_exp for out_exp in input_list if out_exp == 2]
 number_list = range(-5, 5)
 # 类似filter list(filter(lambda x: x < 0, number_list))
 trans_list = [x for x in number_list if x < 0]

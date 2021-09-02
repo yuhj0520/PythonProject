@@ -1,3 +1,14 @@
+# coding:utf-8
+'''
+try:
+    pass
+except:
+    pass
+else:
+    pass
+finally:
+    pass
+'''
 # TypeError：数字类型无法与字符串类型相加
 1 +’2’
 
