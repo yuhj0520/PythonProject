@@ -17,5 +17,5 @@
   <component name="MavenRunner">
     <option name="vmOptions" value="-DarchetypeCatalog=internal" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (ai)" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (base) " project-jdk-type="Python SDK" />
 </project>
