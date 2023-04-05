@@ -1,4 +1,5 @@
 # coding:utf-8
+import matplotlib.pyplot as plt
 import numpy as np
 import random
 import time
@@ -73,3 +74,50 @@ print(f'步长等差数列={array}')
 
 array = np.logspace(0, 2, 5)  # 从10^0开始，到10^2截止，生成共5个数
 print(f'等比数列={array}')
+
+print('--------------------正态分布--------------------')
+# 4.生成符合正态分布的随机数组
+# x1 = np.random.normal(0, 1, 100000000)
+#
+# plt.figure(figsize=(20, 10), dpi=100)
+#
+# plt.hist(x1, 1000)
+#
+# plt.show()
+
+print('--------------------均匀分布--------------------')
+# 5.生成符合均匀分布的随机数组
+# x2 = np.random.uniform(0, 1, 100000000)
+#
+# plt.hist(x2, 1000)
+#
+# plt.show()
+
+
+print('--------------------数组基本操作--------------------')
+# 6.数组切片，每个维度数组分别切片
+stock_change = np.random.normal(0, 1, (4, 5))
+print(f'随机生成数组4行5列为{stock_change}')
+print(f'切片数组第1行第2-4个元素为{stock_change[0, 1:4]}')
+print(f'切片数组第3行第2、4个元素为{stock_change[2, 1:4:2]}')
+
+# 7.数组形状修改
+print(f'数组维度为{stock_change.shape}')
+change1 = stock_change.reshape([5,4]) #返回新数组
+print(f'数组变更形状后，返回新数组{change1}')
+
+change2 = stock_change.reshape([5,-1]) #若为-1，则表示交由系统计算
+#change2 = stock_change.reshape([3,-1]) #系统无法整除的情况会报错
+print(f'数组变更形状后，返回新数组{change2}')
+
+stock_change.resize([10,2]) #修改原数组
+print(f'数组变更形状后，原数组变为{stock_change}')
+
+print(f'数组转置{stock_change.T}')
+
+# 8.类型修改
+print(f'数组类型修改{stock_change.astype(np.string_)}')
+
+# 9.数组去重
+temp = np.array([[1, 2, 3, 4],[3, 4, 5, 6]])
+print(f'数组去重{np.unique(temp)}')
