@@ -50,10 +50,10 @@ students_2 = ["同学_" + str(i) for i in range(score_df.shape[0])]
 score_final.index = students_2
 print(f'DataFrame属性修改行索引后：\n{score_final}')
 # score_final.index[3] = '学生_3' # 不可以单独设置某一具体索引下标
-scroe_reset1 = score_final.reset_index()
-scroe_reset2 = score_final.reset_index(drop=True)
-print(f'DataFrame属性重置索引后：\n{scroe_reset1}')
-print(f'DataFrame属性重置索引后：\n{scroe_reset2}')
+scroe_reset1 = score_final.reset_index()  # 不删除原来索引
+scroe_reset2 = score_final.reset_index(drop=True)  # 删除原来索引
+print(f'DataFrame属性重置索引后（不删除原来索引）：\n{scroe_reset1}')
+print(f'DataFrame属性重置索引后（删除原来索引）：\n{scroe_reset2}')
 
 # 以某列值设置为新的索引
 df = pd.DataFrame({'month': [1, 4, 7, 10],
